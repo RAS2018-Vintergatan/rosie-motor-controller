@@ -94,11 +94,11 @@ void controllerCallback(const geometry_msgs::Twist& msg){
 
     double wl = msg.linear.x/wlR;
     double wr = msg.linear.x/wrR;
-    wl += (wheelSeparation*msg.angular.z)/(2.0*wlR);
-    wr -= (wheelSeparation*msg.angular.z)/(2.0*wrR);
+    wl -= (wheelSeparation*msg.angular.z)/(2.0*wlR);
+    wr += (wheelSeparation*msg.angular.z)/(2.0*wrR);
 
-    t_WLeft = -wl;
-    t_WRight = +wr;
+    t_WLeft = wl;
+    t_WRight = -wr;
 
     errorSumLeft = 0;
     errorSumRight = 0;
