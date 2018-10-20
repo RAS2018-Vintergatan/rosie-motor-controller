@@ -1,0 +1,22 @@
+<launch>
+	
+	<!-- run the motors left and right -->
+	<node pkg="phidgets" type="motor" name="motor_left" respawn="true">
+		<arg name="__name" "motorLeft" />
+		<arg name="_name" "motorLeft" />
+		<arg name="_serial" "475406" />
+	</node>
+	
+	<node pkg="phidgets" type="motor" name="motor_right" respawn="true">
+		<arg name="__name" "motorRight" />
+		<arg name="_name" "motorRight" />
+		<arg name="_serial" "469515" />
+	</node>
+	
+	<!-- load parameters -->
+	<rosparam command="load" file="controller_params.yaml" />
+	
+	<!-- run the motor controller -->
+	<node pkg="rosie_motor_controller" type="rosie_motor_controller" name="motor_controller" respawn="true" />
+	
+</launch>
