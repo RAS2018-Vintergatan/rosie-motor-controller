@@ -8,7 +8,7 @@
 	 args="_serial:=475406 __name:=motorRight _name:=motorRight"/>
 	
 	<!-- load parameters -->
-	<rosparam command="load" file="controller_params.yaml"/>
+	<rosparam command="load" file="$(find rosie_motor_controller)/controller_params.yaml"/>
 	
 	<!-- run the motor controller -->
 	<node pkg="rosie_motor_controller" type="rosie_motor_controller" name="motor_controller"/>
