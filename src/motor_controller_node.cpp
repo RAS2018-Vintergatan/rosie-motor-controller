@@ -55,6 +55,10 @@ void encoderLeftCallback(const phidgets::motor_encoder& msg){
   
     motorLeftPWM = (KpLeft*error + KiLeft*errorSumLeft*0.1 + KdLeft*dError);
 
+	if(t_WLeft == 0 && (motorLeftPWM < 0.1 || motorLeftPWM > -0.1)){
+		motorLeftPWM = 0;
+	}
+
     lastErrorLeft = error;
 
     ROS_INFO("-----------");
@@ -72,6 +76,10 @@ void encoderRightCallback(const phidgets::motor_encoder& msg){
     double dError = (error-lastErrorRight)/10;
 
     motorRightPWM = (KpRight*error + KiRight*errorSumRight*0.1 + KdRight*dError);
+
+	if(t_WRight == 0 && (motorRightPWM < 0.1 || motorRightPWM > -0.1)){
+		motorRightPWM = 0;
+	}
 
     lastErrorRight = error;
 
@@ -96,12 +104,16 @@ void controllerCallback(const geometry_msgs::Twist& msg){
     double wr = msg.linear.x/wrR;
     wl -= (wheelSeparation*msg.angular.z)/(2.0*wlR);
     wr += (wheelSeparation*msg.angular.z)/(2.0*wrR);
+	
+	if(t_WLeft == 0 && (motorLeftPWM < 0.1 || motorLeftPWM > -0.1)){
+		errorSumLeft = 0;
+	}
+	if(t_WRight == 0 && (motorRightPWM < 0.1 || motorRightPWM > -0.1)){
+		errorSumRight = 0;
+	}
 
     t_WLeft = wl;
     t_WRight = -wr;
-
-    errorSumLeft = 0;
-    errorSumRight = 0;
 
     ROS_INFO("target Left: %f, target Right: %f",t_WLeft,t_WRight);
 }
