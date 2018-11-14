@@ -7,6 +7,11 @@
 double t_WLeft = 0;
 double t_WRight = 0;
 
+double dzMinLeft = 0;
+double dzMaxLeft = 0;
+double dzMinRight = 0;
+double dzMaxRight = 0;
+
 double KpLeft = 1.0;
 double KpRight = 1.0;
 
@@ -55,8 +60,14 @@ void encoderLeftCallback(const phidgets::motor_encoder& msg){
   
     motorLeftPWM = (KpLeft*error + KiLeft*errorSumLeft*0.1 + KdLeft*dError);
 
-	if(t_WLeft == 0 && (motorLeftPWM < 0.1 || motorLeftPWM > -0.1)){
+	if(t_WLeft == 0 && (motorLeftPWM < dzMaxLeft || motorLeftPWM > dzMinLeft)){
 		motorLeftPWM = 0;
+	}
+	if(t_WLeft > 0 && motorLeftPWM < dzMaxLeft){
+		motorLeftPWM += dzMaxLeft;
+	}
+	if(t_WLeft < 0 && motorLeftPWM > dzMinLeft){
+		motorLeftPWM += dzMinLeft;
 	}
 
     lastErrorLeft = error;
@@ -77,8 +88,14 @@ void encoderRightCallback(const phidgets::motor_encoder& msg){
 
     motorRightPWM = (KpRight*error + KiRight*errorSumRight*0.1 + KdRight*dError);
 
-	if(t_WRight == 0 && (motorRightPWM < 0.1 || motorRightPWM > -0.1)){
+	if(t_WRight == 0 && (motorRightPWM < dzMaxRight || motorRightPWM > dzMinRight)){
 		motorRightPWM = 0;
+	}
+	if(t_WRight > 0 && motorRightPWM < dzMaxRight){
+		motorRightPWM += dzMaxRight;
+	}
+	if(t_WRight < 0 && motorRightPWM > dzMinRight){
+		motorRightPWM += dzMinRight;
 	}
 
     lastErrorRight = error;
@@ -133,6 +150,15 @@ int main(int argc, char **argv){
     KpRight = mRight_pid["Kp"];
     KiRight = mRight_pid["Ki"];
     KdRight = mRight_pid["Kd"];
+	
+	std::map<std::string,double> mLeft_dz, mRight_dz;
+    n.getParam("motor_left_deadzone", mLeft_dz);
+    n.getParam("motor_right_deadzone", mRight_dz);
+	
+	dzMinLeft = mLeft_dz["min"];
+	dzMaxLeft = mLeft_dz["max"];
+	dzMinRight = mRight_dz["min"];
+	dzMaxRight = mRight_dz["max"];
 
     n.getParam("wheel_left_radius", wlR);
     n.getParam("wheel_right_radius", wrR);
