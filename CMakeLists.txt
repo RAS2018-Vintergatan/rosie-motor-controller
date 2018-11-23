@@ -16,4 +16,5 @@ include_directories(
 
 add_executable(rosie_motor_controller src/motor_controller_node.cpp)
 target_link_libraries(rosie_motor_controller ${catkin_LIBRARIES})
-add_dependencies(rosie_motor_controller std_msgs phidgets geometry_msgs)
+add_dependencies(rosie_motor_controller ${catkin_EXPORTED_TARGETS})
+#std_msgs phidgets geometry_msgs
