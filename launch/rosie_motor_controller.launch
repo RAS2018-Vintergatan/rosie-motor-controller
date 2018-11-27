@@ -2,10 +2,10 @@
 	
 	<!-- run the motors left and right -->
 	<node pkg="phidgets" type="motor" name="motor_left"
-	 args="_serial:=469515 __name:=motorLeft _name:=motorLeft "/>
+	 args="_serial:=475406 __name:=motorLeft _name:=motorLeft "/>
 	
 	<node pkg="phidgets" type="motor" name="motor_right"
-	 args="_serial:=475406 __name:=motorRight _name:=motorRight"/>
+	 args="_serial:=469515 __name:=motorRight _name:=motorRight"/>
 	
 	<!-- load parameters -->
 	<rosparam command="load" file="$(find rosie_motor_controller)/controller_params.yaml"/>
