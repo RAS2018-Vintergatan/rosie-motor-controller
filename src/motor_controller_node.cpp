@@ -60,7 +60,7 @@ void encoderLeftCallback(const phidgets::motor_encoder& msg){
   
     motorLeftPWM = (KpLeft*error + KiLeft*errorSumLeft*0.1 + KdLeft*dError);
 
-	if(t_WLeft == 0 && (motorLeftPWM < dzMaxLeft || motorLeftPWM > dzMinLeft)){
+	if(t_WLeft == 0 && (motorLeftPWM < dzMaxLeft-1 || motorLeftPWM > dzMinLeft+1)){
 		motorLeftPWM = 0;
 	}
 	if(t_WLeft > 0 && motorLeftPWM < dzMaxLeft){
@@ -88,7 +88,7 @@ void encoderRightCallback(const phidgets::motor_encoder& msg){
 
     motorRightPWM = (KpRight*error + KiRight*errorSumRight*0.1 + KdRight*dError);
 
-	if(t_WRight == 0 && (motorRightPWM < dzMaxRight || motorRightPWM > dzMinRight)){
+	if(t_WRight == 0 && (motorRightPWM < dzMaxRight-1 || motorRightPWM > dzMinRight+1)){
 		motorRightPWM = 0;
 	}
 	if(t_WRight > 0 && motorRightPWM < dzMaxRight){
