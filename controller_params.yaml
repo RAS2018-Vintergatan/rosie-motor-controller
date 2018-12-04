@@ -1,8 +1,8 @@
-motor_left_pid: {Kp: 1, Ki: 4, Kd: 0.0}
-motor_right_pid: {Kp: 1, Ki: 4, Kd: 0.0}
+motor_left_pid: {Kp: 1, Ki: 10, Kd: 0.0}
+motor_right_pid: {Kp: 1, Ki: 10, Kd: 0.0}
 
-motor_left_deadzone: {min: -13.0, max: 13.0}
-motor_right_deadzone: {min: -13.0, max: 13.0}
+motor_left_deadzone: {min: -14.0, max: 14.0}
+motor_right_deadzone: {min: -14.0, max: 14.0}
 
 wheel_left_radius: 0.049
 wheel_right_radius: 0.049
