@@ -33,6 +33,18 @@ double errorSumLeft = 0;
 double errorSumRight = 0;
 
 void setPWM(float motorLeft, float motorRight){
+    if(motorRight > 15){
+	motorRight = 15;
+    }
+    if(motorRight < -15){
+	motorRight = -15;
+    }
+    if(motorLeft > 15){
+	motorLeft = 15;
+    }
+    if(motorLeft < -15){
+	motorLeft = -15;
+    }
     motorLeftPWM = motorLeft;
     motorRightPWM = motorRight;
 }
